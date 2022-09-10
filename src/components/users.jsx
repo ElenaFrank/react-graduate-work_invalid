@@ -5,23 +5,22 @@ const Users = () => {
     const [users, setUsers] = useState(API.users.fetchAll())
     const lenUsersArray = users.length
 
-const getTextTittle = () => {
-    return lenUsersArray === 0 ? "Никто с тобой не тусонет" :  renderPharse()
- }
+    const getTextTittle = () => {
+        return lenUsersArray === 0 ? "Никто с тобой не тусонет" :  renderPharse()
+    }
 
-const renderPharse = () => {
-     let altCount = lenUsersArray
-     altCount = altCount>100 ? altCount%100 : altCount
-     altCount = (20<altCount && altCount<100) ? altCount%10 : altCount
+    const renderPharse = () => {
+        let altCount = lenUsersArray
+        altCount = altCount>100 ? altCount%100 : altCount
+        altCount = (20<altCount && altCount<100) ? altCount%10 : altCount
         
-     return altCount >=2
-     && altCount<=4 ? " человека тусанут с тобой сегодня" : " человек тусанет с тобой сегодня"
- }
+        return altCount >=2
+        && altCount<=4 ? " человека тусанут с тобой сегодня" : " человек тусанет с тобой сегодня"
+    }
 
- const getBadgeClasses = () => {
-     let badge = "badge "
-     badge += lenUsersArray !==0 ? "bg-primary" : "bg-danger"
-     return badge
+    const getBadgeClasses = (classValue) => {
+        let badge = "badge m-1 bg-"
+        return badge += classValue
     }
 
 
@@ -31,11 +30,10 @@ const renderPharse = () => {
 
     function renderQualitiesTags (qualities) {
         return qualities.map(quality => {
-            let  color = "badge m-2 bg-" + quality.color
             return (
                 <span
                     key={quality._id}
-                    className={color}
+                    className={getBadgeClasses(quality.color)}
                 >
                 {quality.name}
             </span>
@@ -58,32 +56,14 @@ const renderPharse = () => {
         </tr>
         )})
     }
-    //
-    // const renderTableTag = () => {
-    //     return (
-    //         <>
-    //             <table className="table">
-    //                 <thead>
-    //                 <tr>
-    //                     <th scope="col">Имя</th>
-    //                     <th scope="col">Качества</th>
-    //                     <th scope="col">Провфессия</th>
-    //                     <th scope="col">Встретился, раз</th>
-    //                     <th scope="col">Оценка</th>
-    //                     <th scope="col"></th>
-    //                 </tr>
-    //                 </thead>
-    //                 <tbody>
-    //                 {renderUserTags()}
-    //                 </tbody>
-    //             </table>
-    //         </>
-    //     )
-    // }
 
     return (
         <>
-            <span className={getBadgeClasses()}>{lenUsersArray !==0 && lenUsersArray}{getTextTittle()}</span>
+            <span
+                className={lenUsersArray !==0 ? getBadgeClasses("primary") : getBadgeClasses("danger")}
+            >
+                {lenUsersArray !==0 && lenUsersArray}{getTextTittle()}
+            </span>
             {lenUsersArray !==0 &&
                 <table className="table">
                     <thead>
