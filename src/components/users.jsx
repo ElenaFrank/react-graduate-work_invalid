@@ -19,8 +19,8 @@ const Users = () => {
     }
 
     const getBadgeClasses = (classValue) => {
-        let badge = "badge m-1 bg-"
-        return badge += classValue
+        //let badge = "badge m-1 bg-"
+        return "badge m-1 bg-" + classValue
     }
 
 
