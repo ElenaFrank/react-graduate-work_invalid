@@ -5,21 +5,16 @@ const Users = () => {
     const [users, setUsers] = useState(API.users.fetchAll())
     const lenUsersArray = users.length
 
-    const getTextTittle = () => {
-        return lenUsersArray === 0 ? "Никто с тобой не тусонет" :  renderPharse()
-    }
-
-    const renderPharse = () => {
+    const renderParse = () => {
         let altCount = lenUsersArray
         altCount = altCount>100 ? altCount%100 : altCount
         altCount = (20<altCount && altCount<100) ? altCount%10 : altCount
         
         return altCount >=2
-        && altCount<=4 ? " человека тусанут с тобой сегодня" : " человек тусанет с тобой сегодня"
+        && altCount<=4 ? " человека тусанут" : " человек тусанет"
     }
 
     const getBadgeClasses = (classValue) => {
-        //let badge = "badge m-1 bg-"
         return "badge m-1 bg-" + classValue
     }
 
@@ -59,11 +54,17 @@ const Users = () => {
 
     return (
         <>
-            <span
-                className={lenUsersArray !==0 ? getBadgeClasses("primary") : getBadgeClasses("danger")}
-            >
-                {lenUsersArray !==0 && lenUsersArray}{getTextTittle()}
-            </span>
+            <h3>
+                <span
+                    className={lenUsersArray !==0
+                        ? getBadgeClasses("primary")
+                        : getBadgeClasses("danger")}
+                >
+                    {lenUsersArray !==0
+                    ? `${lenUsersArray} ${renderParse()} с тобой сегодня`
+                        : "Никто с тобой не тусонет"}
+                </span>
+            </h3>
             {lenUsersArray !==0 &&
                 <table className="table">
                     <thead>
