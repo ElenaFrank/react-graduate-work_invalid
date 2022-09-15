@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Qualitie from "./qualitie";
 import API from "../API"
 
 const Users = () => {
@@ -23,26 +24,23 @@ const Users = () => {
         setUsers(users.filter(user => user._id !== id) )
     }
 
-    function renderQualitiesTags (qualities) {
-        return qualities.map(quality => {
-            return (
-                <span
-                    key={quality._id}
-                    className={getBadgeClasses(quality.color)}
-                >
-                {quality.name}
-            </span>
-            )
-        })
-    }
-
     const renderUserTags = () => {
          return users.map(user => {
             return (
             <tr key={user._id}>
                 <th scope="row">{user.name}</th>
                 <td>
-                    {renderQualitiesTags(user.qualities)}
+                    {/* {renderQualitiesTags(user.qualities)} */}
+                    {user.qualities.map(qualit => {
+                        <Qualitie
+                            key={qualit._id}
+                            id = {qualit._id}
+                            color = {qualit.color}
+                            name = {qualit.name}
+                        >
+
+                        </Qualitie>
+                    })}
                 </td>
                 <td>{user.profession.name}</td>
                 <td>{user.completedMeetings}</td>
