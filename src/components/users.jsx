@@ -32,6 +32,7 @@ const Users = () => {
                 <td>
                     {/* {renderQualitiesTags(user.qualities)} */}
                     {user.qualities.map(qualit => {
+                        return (
                         <Qualitie
                             key={qualit._id}
                             id = {qualit._id}
@@ -40,6 +41,7 @@ const Users = () => {
                         >
 
                         </Qualitie>
+                        )
                     })}
                 </td>
                 <td>{user.profession.name}</td>
