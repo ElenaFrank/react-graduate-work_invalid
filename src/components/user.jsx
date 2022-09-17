@@ -2,9 +2,9 @@ import React from "react";
 import Quality from "./quality";
 
 const User = (props) => {
-
+    console.log(props)
     const handleDeleteRow = () => {
-        props.onDeleteRow(props._id)
+        props.onDelete(props._id)
     }
 
     return (

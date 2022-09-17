@@ -1,7 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import Users from './components/users';
+// import Users from './components/users';
+import App from './app';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.css"
 
@@ -12,13 +13,6 @@ import "bootstrap/dist/css/bootstrap.css"
 //   </React.StrictMode>
 // );
 
-const App = () => {
-  return (
-    <React.StrictMode>
-      <Users />
-    </React.StrictMode>
-  )
-}
 
 const users = document.getElementById('root')
 const Root = createRoot(users)
