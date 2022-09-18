@@ -10,6 +10,14 @@ function App() {
         setUsers(users.filter(user => user._id !== id) )
     }
 
+    const handleTogBookmark = (id) => {
+        const i = users.findIndex(user => user._id===id)
+        const newUsers = [...users]
+
+        newUsers[i].bookmark = !newUsers[i].bookmark
+        setUsers(newUsers)
+    }
+
     return (
         <>
             <Status length = {users.length}></Status>
@@ -22,6 +30,7 @@ function App() {
                                     <th scope="col">Провфессия</th>
                                     <th scope="col">Встретился, раз</th>
                                     <th scope="col">Оценка</th>
+                                    <th scope="col">Избранное</th>
                                     <th scope="col"></th>
                                 </tr>
                                 </thead>
@@ -29,6 +38,7 @@ function App() {
                                     <Users
                                         usersList = {users}
                                         onDeleteRow = {handleDeleteRow}
+                                        onBookMark = {handleTogBookmark}
                                     >
 
                                     </Users>

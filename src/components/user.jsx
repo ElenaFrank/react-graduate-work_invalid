@@ -1,8 +1,9 @@
 import React from "react";
 import Quality from "./quality";
+import Bookmark from "./bookmark";
 
 const User = (props) => {
-    console.log(props)
+
     const handleDeleteRow = () => {
         props.onDelete(props._id)
     }
@@ -24,7 +25,15 @@ const User = (props) => {
             <td>{props.profession.name}</td>
             <td>{props.completedMeetings}</td>
             <td>{props.rate}</td>
-            <td><button className="btn btn-danger m-2" onClick={handleDeleteRow}>Delete</button></td>
+            <td>
+                <Bookmark
+                    user={props}
+                    onBookMark = {props.onBookMark}
+                >
+
+                </Bookmark>
+            </td>
+            <td style={{paddingTop:'0'}}><button className="btn btn-danger m-2" onClick={handleDeleteRow}>Delete</button></td>
         </tr>
     )
 
