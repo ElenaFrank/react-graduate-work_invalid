@@ -22,7 +22,7 @@ function App() {
     }
 
     const handlePageChange = (param) => {
-        
+
 
     }
      
@@ -55,7 +55,7 @@ function App() {
                 </table>
                 
             }
-            <Pagination count={count} pageSize={pageSize} onPageChange={handlePageChange}></Pagination>
+            <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange}></Pagination>
         </>
     )
 }
