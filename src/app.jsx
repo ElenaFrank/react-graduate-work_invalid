@@ -3,11 +3,17 @@ import Users from "../src/components/users";
 import Status from "../src/components/searchStatus";
 import API from "./API"
 import Pagination from "./components/pagination";
+import { paginate } from "./utils/paginate";
 
 function App() {
     const [users, setUsers] = useState(API.users.fetchAll())
     const count = users.length
     const pageSize = 4
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const handlePageChange = (id) => {
+        setCurrentPage(id)
+    }
 
     const handleDeleteRow = (id) => {
         setUsers(users.filter(user => user._id !== id) )
@@ -21,11 +27,7 @@ function App() {
         setUsers(newUsers)
     }
 
-    const handlePageChange = (param) => {
-
-
-    }
-     
+    const userCurrent = paginate(users,currentPage,pageSize)
 
     return (
         <>
@@ -45,7 +47,7 @@ function App() {
                     </thead>
                     <tbody>
                         <Users
-                            usersList = {users}
+                            usersList = {userCurrent}
                             onDeleteRow = {handleDeleteRow}
                             onBookMark = {handleTogBookmark}
                         >
@@ -55,7 +57,14 @@ function App() {
                 </table>
                 
             }
-            <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange}></Pagination>
+            <Pagination 
+                itemsCount = {count} 
+                pageSize = {pageSize} 
+                onPageChange = {handlePageChange}
+                currentPage = {currentPage}
+            >
+
+            </Pagination>
         </>
     )
 }
