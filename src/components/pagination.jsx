@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import _ from 'lodash'
+import PropType from "prop-types"
 
 const Pagination = ({itemsCount, pageSize, onPageChange,currentPage}) => {
 
@@ -31,6 +32,12 @@ const Pagination = ({itemsCount, pageSize, onPageChange,currentPage}) => {
             </ul>
         </nav>
     )
+}
+Pagination.protoType = {
+    itemsCount:PropType.number.isRequired,
+    pageSize:PropType.number.isRequired,
+    onPageChange:PropType.func.isRequired,
+    currentPage:PropType.number.isRequired, 
 }
  
 export default Pagination;

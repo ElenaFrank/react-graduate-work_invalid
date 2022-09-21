@@ -58,7 +58,7 @@ function App() {
                 
             }
             <Pagination 
-                itemsCount = {count} 
+                itemsCount = {"cnh"} 
                 pageSize = {pageSize} 
                 onPageChange = {handlePageChange}
                 currentPage = {currentPage}
