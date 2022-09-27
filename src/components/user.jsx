@@ -1,18 +1,18 @@
-import React from "react";
-import Quality from "./quality";
-import Bookmark from "./bookmark";
+import React from "react"
+import Quality from "./quality"
+import Bookmark from "./bookmark"
 
 const User = (props) => {
   const handleDeleteRow = () => {
-    props.onDelete(props._id);
-  };
+    props.onDelete(props._id)
+  }
 
   return (
     <tr key={props._id}>
       <th scope="row">{props.name}</th>
       <td>
         {props.qualities.map((quality) => {
-          return <Quality key={quality._id} {...quality}></Quality>;
+          return <Quality key={quality._id} {...quality}></Quality>
         })}
       </td>
       <td>{props.profession.name}</td>
@@ -27,7 +27,7 @@ const User = (props) => {
         </button>
       </td>
     </tr>
-  );
-};
+  )
+}
 
-export default User;
+export default User

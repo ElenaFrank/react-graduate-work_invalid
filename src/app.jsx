@@ -1,33 +1,33 @@
-import React, { useState } from "react";
-import Users from "../src/components/users";
-import Status from "../src/components/searchStatus";
-import API from "./API";
-import Pagination from "./components/pagination";
-import { paginate } from "./utils/paginate";
+import React, { useState } from "react"
+import Users from "../src/components/users"
+import Status from "../src/components/searchStatus"
+import API from "./API"
+import Pagination from "./components/pagination"
+import { paginate } from "./utils/paginate"
 
-function App() {
-  const [users, setUsers] = useState(API.users.fetchAll());
-  const count = users.length;
-  const pageSize = 4;
-  const [currentPage, setCurrentPage] = useState(1);
+function App () {
+  const [users, setUsers] = useState(API.users.fetchAll())
+  const count = users.length
+  const pageSize = 4
+  const [currentPage, setCurrentPage] = useState(1)
 
   const handlePageChange = (id) => {
-    setCurrentPage(id);
-  };
+    setCurrentPage(id)
+  }
 
   const handleDeleteRow = (id) => {
-    setUsers(users.filter((user) => user._id !== id));
-  };
+    setUsers(users.filter((user) => user._id !== id))
+  }
 
   const handleTogBookmark = (id) => {
-    const i = users.findIndex((user) => user._id === id);
-    const newUsers = [...users];
+    const i = users.findIndex((user) => user._id === id)
+    const newUsers = [...users]
 
-    newUsers[i].bookmark = !newUsers[i].bookmark;
-    setUsers(newUsers);
-  };
+    newUsers[i].bookmark = !newUsers[i].bookmark
+    setUsers(newUsers)
+  }
 
-  const userCurrent = paginate(users, currentPage, pageSize);
+  const userCurrent = paginate(users, currentPage, pageSize)
 
   return (
     <>
@@ -61,7 +61,7 @@ function App() {
         currentPage={currentPage}
       ></Pagination>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 
 const Status = (props) => {
   const renderParse = () => {
-    let altCount = props.length;
-    altCount = altCount > 100 ? altCount % 100 : altCount;
-    altCount = 20 < altCount && altCount < 100 ? altCount % 10 : altCount;
+    let altCount = props.length
+    altCount = altCount > 100 ? altCount % 100 : altCount
+    altCount = 20 < altCount && altCount < 100 ? altCount % 10 : altCount
 
     return altCount >= 2 && altCount <= 4
       ? " человека тусанут"
-      : " человек тусанет";
-  };
+      : " человек тусанет"
+  }
 
   return (
     <h3>
@@ -23,7 +23,7 @@ const Status = (props) => {
           : "Никто с тобой не тусонет"}
       </span>
     </h3>
-  );
-};
+  )
+}
 
-export default Status;
+export default Status

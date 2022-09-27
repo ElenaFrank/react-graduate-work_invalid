@@ -1,5 +1,5 @@
-import React from "react";
-import User from "./user";
+import React from "react"
+import User from "./user"
 
 const Users = (props) => {
   return (
@@ -12,10 +12,13 @@ const Users = (props) => {
             onDelete={props.onDeleteRow}
             onBookMark={props.onBookMark}
           ></User>
-        );
+        )
       })}
     </>
-  );
-};
+  )
 
-export default Users;
+
+
+}
+
+export default Users
