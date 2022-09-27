@@ -1,11 +1,11 @@
-import React from "react"
+import React from "react";
 
 const Quality = (props) => {
   return (
     <span key={props.id} className={"badge m-1 bg-" + props.color}>
       {props.name}
     </span>
-  )
-}
+  );
+};
 
-export default Quality
+export default Quality;

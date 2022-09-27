@@ -1,18 +1,19 @@
-import React from "react"
-import Quality from "./quality"
-import Bookmark from "./bookmark"
+import React from "react";
+import Quality from "./quality";
+import Bookmark from "./bookmark";
+import PropType from "prop-types";
 
 const User = (props) => {
   const handleDeleteRow = () => {
-    props.onDelete(props._id)
-  }
+    props.onDelete(props._id);
+  };
 
   return (
     <tr key={props._id}>
       <th scope="row">{props.name}</th>
       <td>
         {props.qualities.map((quality) => {
-          return <Quality key={quality._id} {...quality}></Quality>
+          return <Quality key={quality._id} {...quality}></Quality>;
         })}
       </td>
       <td>{props.profession.name}</td>
@@ -27,7 +28,19 @@ const User = (props) => {
         </button>
       </td>
     </tr>
-  )
-}
+  );
+};
+User.propTypes = {
+  onDelete: PropType.func.isRequired,
+  onBookMark: PropType.func.isRequired,
+  map: PropType.func.isRequired,
+  completedMeetings: PropType.number.isRequired,
+  rate: PropType.number.isRequired,
+  _id: PropType.number.isRequired,
+  name: PropType.string.isRequired,
+  professionName: PropType.string.isRequired,
+  profession: PropType.array.isRequired,
+  qualities: PropType.array.isRequired,
+};
 
-export default User
+export default User;

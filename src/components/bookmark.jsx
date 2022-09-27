@@ -1,11 +1,11 @@
-import React from "react"
+import React from "react";
 
 const BookMark = (props) => {
-  const { user, onBookMark } = props
+  const { user, onBookMark } = props;
 
   const clickBookMark = () => {
-    onBookMark(user._id)
-  }
+    onBookMark(user._id);
+  };
 
   return (
     <button style={{ border: "1px solid black" }}>
@@ -14,7 +14,7 @@ const BookMark = (props) => {
         onClick={clickBookMark}
       ></i>
     </button>
-  )
-}
+  );
+};
 
-export default BookMark
+export default BookMark;
