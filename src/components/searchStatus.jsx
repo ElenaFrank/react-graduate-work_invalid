@@ -1,7 +1,7 @@
 import React from "react"
 import PropType from "prop-types"
 
-const Status = (length) => {
+const Status = ({ length }) => {
   const renderParse = () => {
     let altCount = length
     altCount = altCount > 100 ? altCount % 100 : altCount

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import User from "./user";
-import API from "../API";
-import { paginate } from "../utils/paginate";
-import Status from "./searchStatus";
-import Pagination from "./pagination";
+import React, { useState } from "react"
+import User from "./user"
+import API from "../API"
+import { paginate } from "../utils/paginate"
+import Status from "./searchStatus"
+import Pagination from "./pagination"
 
 const Users = () => {
   // return (
@@ -12,28 +12,28 @@ const Users = () => {
   //   </>
   // )
 
-  const [users, setUsers] = useState(API.users.fetchAll());
-  const count = users.length;
-  const pageSize = 4;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [users, setUsers] = useState(API.users.fetchAll())
+  const count = users.length
+  const pageSize = 4
+  const [currentPage, setCurrentPage] = useState(1)
 
   const handlePageChange = (id) => {
-    setCurrentPage(id);
-  };
+    setCurrentPage(id)
+  }
 
   const handleDeleteRow = (id) => {
-    setUsers(users.filter((user) => user._id !== id));
-  };
+    setUsers(users.filter((user) => user._id !== id))
+  }
 
   const handleTogBookmark = (id) => {
-    const i = users.findIndex((user) => user._id === id);
-    const newUsers = [...users];
+    const i = users.findIndex((user) => user._id === id)
+    const newUsers = [...users]
 
-    newUsers[i].bookmark = !newUsers[i].bookmark;
-    setUsers(newUsers);
-  };
+    newUsers[i].bookmark = !newUsers[i].bookmark
+    setUsers(newUsers)
+  }
 
-  const userCurrent = paginate(users, currentPage, pageSize);
+  const userCurrent = paginate(users, currentPage, pageSize)
 
   return (
     <>
@@ -52,7 +52,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            <div>
+            <>
               {userCurrent.map((user) => {
                 return (
                   <User
@@ -67,9 +67,9 @@ const Users = () => {
                     onDelete={handleDeleteRow}
                     onBookMark={handleTogBookmark}
                   ></User>
-                );
+                )
               })}
-            </div>
+            </>
           </tbody>
         </table>
       )}
@@ -80,7 +80,7 @@ const Users = () => {
         currentPage={currentPage}
       ></Pagination>
     </>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users
