@@ -6,14 +6,8 @@ import Status from "./searchStatus"
 import Pagination from "./pagination"
 
 const Users = () => {
-  // return (
-  //   <>
-  //
-  //   </>
-  // )
-
   const [users, setUsers] = useState(API.users.fetchAll())
-  const count = users.length
+  // const count = users.length
   const pageSize = 4
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -37,8 +31,8 @@ const Users = () => {
 
   return (
     <>
-      <Status length={count}></Status>
-      {count !== 0 && (
+      <Status length={users.length}></Status>
+      {users.length !== 0 && (
         <table className="table">
           <thead>
             <tr>
@@ -57,12 +51,6 @@ const Users = () => {
                 return (
                   <User
                     key={user._id}
-                    // id={user._id}
-                    // name={user.name}
-                    // qualities={user.qualities}
-                    // professionName={user.profession.name}
-                    // completedMeetings={user.completedMeetings}
-                    // rate={user.rate}
                     {...user}
                     onDelete={handleDeleteRow}
                     onBookMark={handleTogBookmark}
@@ -74,7 +62,7 @@ const Users = () => {
         </table>
       )}
       <Pagination
-        itemsCount={count}
+        itemsCount={users.length}
         pageSize={pageSize}
         onPageChange={handlePageChange}
         currentPage={currentPage}

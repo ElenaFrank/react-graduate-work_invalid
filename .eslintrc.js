@@ -16,7 +16,7 @@ module.exports = {
       {
         objects: "only-multiline",
         functions: "only-multiline",
-      },
+      }
     ],
     indent: ["error", 2],
     semi: [2, "never"],
@@ -24,4 +24,4 @@ module.exports = {
     quotes: ["error", "double", { allowTemplateLiterals: false }],
     yoda: ["error", "never", { onlyEquality: true }],
   },
-};
+}
