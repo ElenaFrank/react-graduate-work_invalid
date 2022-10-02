@@ -20,7 +20,7 @@ module.exports = {
     ],
     indent: ["error", 2],
     semi: [2, "never"],
-    "space-before-function-paren": ["error", "always"],
+    "space-before-function-paren": ["error", { anonymous: "always", named: "never" }],
     quotes: ["error", "double", { allowTemplateLiterals: false }],
     yoda: ["error", "never", { onlyEquality: true }],
   },

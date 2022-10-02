@@ -4,12 +4,18 @@ import API from "../API"
 import { paginate } from "../utils/paginate"
 import Status from "./searchStatus"
 import Pagination from "./pagination"
+import GroupList from "./groupList"
 
 const Users = () => {
+  const [professions] = useState(API.professions.fetchAll())
   const [users, setUsers] = useState(API.users.fetchAll())
-  // const count = users.length
   const pageSize = 4
   const [currentPage, setCurrentPage] = useState(1)
+
+  const handleItemSelect = (params) => {
+    console.log(params)
+  }
+  console.log(professions)
 
   const handlePageChange = (id) => {
     setCurrentPage(id)
@@ -31,6 +37,7 @@ const Users = () => {
 
   return (
     <>
+      <GroupList items={professions} onItemSelect={handleItemSelect}></GroupList>
       <Status length={users.length}></Status>
       {users.length !== 0 && (
         <table className="table">

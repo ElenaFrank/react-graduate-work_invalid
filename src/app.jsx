@@ -5,7 +5,7 @@ import Users from "../src/components/users"
 // import Pagination from "./components/pagination";
 // import { paginate } from "./utils/paginate";
 
-function App () {
+function App() {
   return <Users></Users>
 }
 export default App
