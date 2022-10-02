@@ -1,8 +1,7 @@
 import React from "react"
+import PropType from "prop-types"
 
-const BookMark = (props) => {
-  const { user, onBookMark } = props
-
+const BookMark = ({ user, onBookMark }) => {
   const clickBookMark = () => {
     onBookMark(user._id)
   }
@@ -15,6 +14,12 @@ const BookMark = (props) => {
       ></i>
     </button>
   )
+}
+BookMark.propTypes = {
+  user: PropType.object.isRequired,
+  onBookMark: PropType.func.isRequired,
+  _id: PropType.string,
+  bookmark: PropType.bool
 }
 
 export default BookMark

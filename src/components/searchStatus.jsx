@@ -1,8 +1,9 @@
 import React from "react"
+import PropType from "prop-types"
 
-const Status = (props) => {
+const Status = ({ length }) => {
   const renderParse = () => {
-    let altCount = props.length
+    let altCount = length
     altCount = altCount > 100 ? altCount % 100 : altCount
     altCount = 20 < altCount && altCount < 100 ? altCount % 10 : altCount
 
@@ -15,15 +16,18 @@ const Status = (props) => {
     <h3>
       <span
         className={
-          props.length !== 0 ? "badge m-1 bg-primary" : "badge m-1 bg-danger"
+          length !== 0 ? "badge m-1 bg-primary" : "badge m-1 bg-danger"
         }
       >
-        {props.length !== 0
-          ? `${props.length} ${renderParse()} с тобой сегодня`
+        {length !== 0
+          ? `${length} ${renderParse()} с тобой сегодня`
           : "Никто с тобой не тусонет"}
       </span>
     </h3>
   )
 }
 
+Status.propTypes = {
+  length: PropType.number.isRequired,
+}
 export default Status
