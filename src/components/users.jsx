@@ -26,15 +26,13 @@ const Users = () => {
         setSelectedProf(params)
         console.log(params)
     }
-
+    const handleDeleteRow = (id) => {
+        setUsers(users.filter((user) => user._id !== id))
+        0 === userCurrent.length - 1 && setCurrentPage(currentPage - 1)
+    }
     const handlePageChange = (id) => {
         setCurrentPage(id)
     }
-
-    const handleDeleteRow = (id) => {
-        setUsers(users.filter((user) => user._id !== id))
-    }
-
     const handleTogBookmark = (id) => {
         const i = users.findIndex((user) => user._id === id)
         const newUsers = [...users]
@@ -46,61 +44,71 @@ const Users = () => {
     const filteredUsers = selectedProf
         ? users.filter(user => user.profession === selectedProf)
         : users
+    const count = filteredUsers.length
+    const userCurrent = paginate(filteredUsers, currentPage, pageSize)
+
     const clearFilter = () => {
         setSelectedProf()
     }
-
-    const userCurrent = paginate(filteredUsers, currentPage, pageSize)
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [selectedProf])
 
     return (
-        <>
-            <Status length={users.length}></Status>
-            {professions && (
-                <>
-                    <GroupList
-                        items={professions}
-                        onItemSelect={handleProfessionsSelect}
-                        selectedItem={selectedProf}
-                    ></GroupList>
-                    <button className={"btn btn-secondary mt-2"} onClick={clearFilter}>Clear</button>
-                </>
+        <div className="d-flex">
+            <div className="d-flex flex-column flex-shrink-0 p-3">
+                {professions && (
+                    <>
+                        <GroupList
+                            items={professions}
+                            onItemSelect={handleProfessionsSelect}
+                            selectedItem={selectedProf}
+                        ></GroupList>
+                        <button className={"btn btn-secondary mt-2"} onClick={clearFilter}>Clear</button>
+                    </>
+                )}
+            </div>
+            {0 !== count && (
+                <div className="d-flex flex-column">
+                    <Status length={count}></Status>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Имя</th>
+                                <th scope="col">Качества</th>
+                                <th scope="col">Провфессия</th>
+                                <th scope="col">Встретился, раз</th>
+                                <th scope="col">Оценка</th>
+                                <th scope="col">Избранное</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <>
+                                {userCurrent.map((user) => {
+                                    return (
+                                        <User
+                                            key={user._id}
+                                            {...user}
+                                            onDelete={handleDeleteRow}
+                                            onBookMark={handleTogBookmark}
+                                        ></User>
+                                    )
+                                })}
+                            </>
+                        </tbody>
+                    </table>
+                    <div className="d-flex justify-content-center">
+                        <Pagination
+                            itemsCount={count}
+                            pageSize={pageSize}
+                            onPageChange={handlePageChange}
+                            currentPage={currentPage}
+                        ></Pagination>
+                    </div>
+                </div>
             )}
-            {0 !== users.length && (
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Имя</th>
-                            <th scope="col">Качества</th>
-                            <th scope="col">Провфессия</th>
-                            <th scope="col">Встретился, раз</th>
-                            <th scope="col">Оценка</th>
-                            <th scope="col">Избранное</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <>
-                            {userCurrent.map((user) => {
-                                return (
-                                    <User
-                                        key={user._id}
-                                        {...user}
-                                        onDelete={handleDeleteRow}
-                                        onBookMark={handleTogBookmark}
-                                    ></User>
-                                )
-                            })}
-                        </>
-                    </tbody>
-                </table>
-            )}
-            <Pagination
-                itemsCount={users.length}
-                pageSize={pageSize}
-                onPageChange={handlePageChange}
-                currentPage={currentPage}
-            ></Pagination>
-        </>
+        </div>
     )
 }
 
