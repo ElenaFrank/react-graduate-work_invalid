@@ -13,7 +13,13 @@ const Users = () => {
     const pageSize = 4
     const [currentPage, setCurrentPage] = useState(1)
     useEffect(() => {
-        API.professions.fetchAll().then((data) => setProfessions(data))
+        API.professions
+            .fetchAll()
+            .then((data) =>
+                setProfessions(
+                    data
+                )
+            )
     }, [])
 
     const handleProfessionsSelect = (params) => {
@@ -37,17 +43,27 @@ const Users = () => {
         setUsers(newUsers)
     }
 
-    const userCurrent = paginate(users, currentPage, pageSize)
+    const filteredUsers = selectedProf
+        ? users.filter(user => user.profession === selectedProf)
+        : users
+    const clearFilter = () => {
+        setSelectedProf()
+    }
+
+    const userCurrent = paginate(filteredUsers, currentPage, pageSize)
 
     return (
         <>
             <Status length={users.length}></Status>
             {professions && (
-                <GroupList
-                    items={professions}
-                    onItemSelect={handleProfessionsSelect}
-                    selectedItem={selectedProf}
-                ></GroupList>
+                <>
+                    <GroupList
+                        items={professions}
+                        onItemSelect={handleProfessionsSelect}
+                        selectedItem={selectedProf}
+                    ></GroupList>
+                    <button className={"btn btn-secondary mt-2"} onClick={clearFilter}>Clear</button>
+                </>
             )}
             {0 !== users.length && (
                 <table className="table">
