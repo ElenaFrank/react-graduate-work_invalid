@@ -1,15 +1,38 @@
 import React from "react"
+import PropTypes from "prop-types"
 
-const GroupList = () => {
-  return (
-    <ul className="list-group">
-      <li className="list-group-item">An item</li>
-      <li className="list-group-item">A second item</li>
-      <li className="list-group-item">A third item</li>
-      <li className="list-group-item">A fourth item</li>
-      <li className="list-group-item">And a fifth one</li>
-    </ul>
-  )
+const GroupList = ({ items, valueProperty, contentProperty, onItemSelect, selectedItem }) => {
+    const checkParamClass = (item) => {
+        return selectedItem === item ? "active" : ""
+    }
+
+    return (
+        <ul className="list-group">
+            {/* eslint-disable-next-line array-callback-return */}
+
+            { Object.keys(items).map(item => {
+                return < li
+                    key={items[item][valueProperty]}
+                    className={"list-group-item " + checkParamClass(items[item])}
+                    onClick={() => onItemSelect(items[item])}
+                    role="button">{items[item][contentProperty]}
+                </li>
+            })
+            }
+        </ul>
+    )
+}
+GroupList.defaultProps = {
+    valueProperty: "_id",
+    contentProperty: "name"
+}
+GroupList.propTypes = {
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    valueProperty: PropTypes.string,
+    contentProperty: PropTypes.string,
+    onItemSelect: PropTypes.func,
+    checkParamClass: PropTypes.func,
+    selectedItem: PropTypes.object
 }
 
 export default GroupList
