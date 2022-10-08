@@ -8,7 +8,7 @@ import GroupList from "./groupList"
 
 const Users = () => {
     const [professions, setProfessions] = useState()
-    const [users, setUsers] = useState(API.users.fetchAll())
+    const [users, setUsers] = useState()
     const [selectedProf, setSelectedProf] = useState()
     const pageSize = 4
     const [currentPage, setCurrentPage] = useState(1)
@@ -21,10 +21,16 @@ const Users = () => {
                 )
             )
     }, [])
+    useEffect(() => {
+        API.users
+            .fetchAll()
+            .then(dataUsers =>
+                setUsers(dataUsers)
+            )
+    }, [])
 
     const handleProfessionsSelect = (params) => {
         setSelectedProf(params)
-        console.log(params)
     }
     const handleDeleteRow = (id) => {
         setUsers(users.filter((user) => user._id !== id))
@@ -42,10 +48,12 @@ const Users = () => {
     }
 
     const filteredUsers = selectedProf
-        ? users.filter(user => user.profession === selectedProf)
+        ? users.filter(user => {
+            return user.profession._id === selectedProf._id
+        })
         : users
-    const count = filteredUsers.length
-    const userCurrent = paginate(filteredUsers, currentPage, pageSize)
+    const count = filteredUsers && filteredUsers.length
+    const userCurrent = filteredUsers && paginate(filteredUsers, currentPage, pageSize)
 
     const clearFilter = () => {
         setSelectedProf()
@@ -68,7 +76,7 @@ const Users = () => {
                     </>
                 )}
             </div>
-            {0 !== count && (
+            {count && (
                 <div className="d-flex flex-column">
                     <Status length={count}></Status>
                     <table className="table">
@@ -85,16 +93,17 @@ const Users = () => {
                         </thead>
                         <tbody>
                             <>
-                                {userCurrent.map((user) => {
-                                    return (
-                                        <User
-                                            key={user._id}
-                                            {...user}
-                                            onDelete={handleDeleteRow}
-                                            onBookMark={handleTogBookmark}
-                                        ></User>
-                                    )
-                                })}
+                                {userCurrent &&
+                                    userCurrent.map((user) => {
+                                        return (
+                                            <User
+                                                key={user._id}
+                                                {...user}
+                                                onDelete={handleDeleteRow}
+                                                onBookMark={handleTogBookmark}
+                                            ></User>
+                                        )
+                                    })}
                             </>
                         </tbody>
                     </table>

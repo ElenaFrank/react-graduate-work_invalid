@@ -5,13 +5,20 @@ const GroupList = ({ items, valueProperty, contentProperty, onItemSelect, select
     const checkParamClass = (item) => {
         return selectedItem === item ? "active" : ""
     }
+
     return (
         <ul className="list-group">
             {/* eslint-disable-next-line array-callback-return */}
-            {Object.keys(items).map(item => {
-                return < li key={items[item][valueProperty]} className={"list-group-item " + checkParamClass(items[item])} onClick={() => onItemSelect(items[item])} role="button">{items[item][contentProperty]}</li>
-            })}
 
+            { Object.keys(items).map(item => {
+                return < li
+                    key={items[item][valueProperty]}
+                    className={"list-group-item " + checkParamClass(items[item])}
+                    onClick={() => onItemSelect(items[item])}
+                    role="button">{items[item][contentProperty]}
+                </li>
+            })
+            }
         </ul>
     )
 }
@@ -20,7 +27,7 @@ GroupList.defaultProps = {
     contentProperty: "name"
 }
 GroupList.propTypes = {
-    items: PropTypes.object.isRequired,
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     valueProperty: PropTypes.string,
     contentProperty: PropTypes.string,
     onItemSelect: PropTypes.func,
