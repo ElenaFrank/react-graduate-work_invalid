@@ -25,6 +25,6 @@ module.exports = {
             { anonymous: "always", named: "never" }
         ],
         quotes: ["error", "double", { allowTemplateLiterals: false }],
-        yoda: ["error", "always"]
+        // yoda: ["never", { exceptRange: true }]
     },
 }

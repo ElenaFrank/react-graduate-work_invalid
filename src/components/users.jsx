@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
-import User from "./user"
 import API from "../API"
 import { paginate } from "../utils/paginate"
 import Status from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
+import UserTable from "./usersTable"
+import { rest } from "lodash"
 
 const Users = () => {
     const [professions, setProfessions] = useState()
@@ -34,7 +35,7 @@ const Users = () => {
     }
     const handleDeleteRow = (id) => {
         setUsers(users.filter((user) => user._id !== id))
-        0 === userCurrent.length - 1 && setCurrentPage(currentPage - 1)
+        userCurrent.length - 1 === 0 && setCurrentPage(currentPage - 1)
     }
     const handlePageChange = (id) => {
         setCurrentPage(id)
@@ -76,47 +77,24 @@ const Users = () => {
                     </>
                 )}
             </div>
-            {count && (
-                <div className="d-flex flex-column">
-                    <Status length={count}></Status>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Имя</th>
-                                <th scope="col">Качества</th>
-                                <th scope="col">Провфессия</th>
-                                <th scope="col">Встретился, раз</th>
-                                <th scope="col">Оценка</th>
-                                <th scope="col">Избранное</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <>
-                                {userCurrent &&
-                                    userCurrent.map((user) => {
-                                        return (
-                                            <User
-                                                key={user._id}
-                                                {...user}
-                                                onDelete={handleDeleteRow}
-                                                onBookMark={handleTogBookmark}
-                                            ></User>
-                                        )
-                                    })}
-                            </>
-                        </tbody>
-                    </table>
-                    <div className="d-flex justify-content-center">
-                        <Pagination
-                            itemsCount={count}
-                            pageSize={pageSize}
-                            onPageChange={handlePageChange}
-                            currentPage={currentPage}
-                        ></Pagination>
-                    </div>
-                </div>
-            )}
+            <div className="d-flex flex-column">
+                <Status length={count}></Status>
+                {count > 0 && (
+                    <>
+                        <UserTable users={userCurrent} {...rest}
+                        >
+                        </UserTable>
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                itemsCount={count}
+                                pageSize={pageSize}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            ></Pagination>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     )
 }
