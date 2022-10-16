@@ -1,16 +1,16 @@
 import React from "react"
 import PropType from "prop-types"
 
-const BookMark = ({ status, onBookMark }) => {
-    // const clickBookMark = () => {
-    //     onBookMark(id)
-    // }
+const BookMark = ({ id, status, onBookMark }) => {
+    const clickBookMark = () => {
+        onBookMark(id)
+    }
 
     return (
         <button style={{ border: "1px solid black" }}>
             <i
                 className={!status ? "bi bi-bookmark" : "bi bi-bookmark-fill"}
-                // onClick={clickBookMark}
+                onClick={clickBookMark}
             ></i>
         </button>
     )

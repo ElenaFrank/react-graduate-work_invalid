@@ -1,13 +1,39 @@
 /* eslint-disable react/prop-types */
-import React from "react"
+import React, { useState } from "react"
 import PropType from "prop-types"
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
+    const [sortedCoulumn, setSortedColumn] = useState([])
     const handleSort = (item) => {
         if (selectedSort.path === item) {
-            onSort({ ...selectedSort, order: selectedSort.order === "asc" ? "desc" : "asc" })
+            onSort({
+                ...selectedSort,
+                order: selectedSort.order === "asc" ? "desc" : "asc",
+                style: selectedSort.order === "desc" ? "bi bi-caret-down-fill" : "bi bi-caret-up-fill"
+            })
         } else {
-            onSort({ path: item, order: "asc" })
+            onSort({ path: item, order: "asc", style: "bi bi-caret-up-fill" })
+            const isThereArray = sortedCoulumn.some(element => element === item)
+            if (!isThereArray) {
+                const newSortedColumn = [...sortedCoulumn]
+                newSortedColumn.push(item)
+                setSortedColumn(newSortedColumn)
+            }
+        }
+    }
+
+    const handleStyle = (item) => {
+        if (selectedSort.path === item) {
+            return selectedSort.order === "asc" ? "bi bi-caret-up-fill" : "bi bi-caret-down-fill"
+        }
+    }
+
+    const renderSpan = (item) => {
+        if (sortedCoulumn) {
+            const isSort = sortedCoulumn.some(element => element === item)
+            if (item && isSort) {
+                return handleStyle(item)
+            }
         }
     }
     return (
@@ -21,15 +47,10 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {...{ role: columns[column].path && "button" }}
                     >
                         {columns[column].name}
+                        <span className={renderSpan(columns[column]?.path)}></span>
                     </th>
                 ))}
-                {/* <th onClick={() => handleSort("name")} scope="col">Имя</th>
-                <th scope="col">Качества</th>
-                <th onClick={() => handleSort("profession.name")} scope="col">Провфессия</th>
-                <th onClick={() => handleSort("completedMeetings")} scope="col">Встретился, раз</th>
-                <th onClick={() => handleSort("rate")} scope="col">Оценка</th>
-                <th onClick={() => handleSort("bookmark")} scope="col">Избранное</th>
-                <th scope="col"></th> */}
+
             </tr>
         </thead>
     )
