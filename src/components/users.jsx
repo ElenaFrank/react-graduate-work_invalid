@@ -5,13 +5,14 @@ import Status from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
 import UserTable from "./usersTable"
-import { rest } from "lodash"
+import _ from "lodash"
 
 const Users = () => {
     const [professions, setProfessions] = useState()
     const [users, setUsers] = useState()
     const [selectedProf, setSelectedProf] = useState()
-    const pageSize = 4
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" })
+    const pageSize = 8
     const [currentPage, setCurrentPage] = useState(1)
     useEffect(() => {
         API.professions
@@ -40,7 +41,7 @@ const Users = () => {
     const handlePageChange = (id) => {
         setCurrentPage(id)
     }
-    const handleTogBookmark = (id) => {
+    const handleToggleBookMark = (id) => {
         const i = users.findIndex((user) => user._id === id)
         const newUsers = [...users]
 
@@ -48,13 +49,23 @@ const Users = () => {
         setUsers(newUsers)
     }
 
+    // Changing of sort
+    const handleSort = (item) => {
+        setSortBy(item)
+    }
+
     const filteredUsers = selectedProf
         ? users.filter(user => {
             return user.profession._id === selectedProf._id
         })
         : users
+
+    // Sort of elements
+    const sortedUsers = _.orderBy(filteredUsers, sortBy.iter, sortBy.order)
     const count = filteredUsers && filteredUsers.length
-    const userCurrent = filteredUsers && paginate(filteredUsers, currentPage, pageSize)
+
+    // Pages
+    const userCurrent = filteredUsers && paginate(sortedUsers, currentPage, pageSize)
 
     const clearFilter = () => {
         setSelectedProf()
@@ -78,10 +89,15 @@ const Users = () => {
                 )}
             </div>
             <div className="d-flex flex-column">
-                <Status length={count}></Status>
+                {count !== undefined && <Status length={count}></Status>}
                 {count > 0 && (
                     <>
-                        <UserTable users={userCurrent} {...rest}
+                        <UserTable
+                            users={userCurrent}
+                            onSort={handleSort}
+                            selectedSort = {sortBy}
+                            onDeleteRow = {handleDeleteRow}
+                            onToggleBookMark = {handleToggleBookMark}
                         >
                         </UserTable>
                         <div className="d-flex justify-content-center">

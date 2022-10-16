@@ -14,8 +14,8 @@ const GroupList = ({ items, valueProperty, contentProperty, onItemSelect, select
                 return < li
                     key={items[item][valueProperty]}
                     className={"list-group-item " + checkParamClass(items[item])}
-                    onClick={() => onItemSelect(items[item])}
-                    role="button">{items[item][contentProperty]}
+                    role={"button"}
+                    onClick={() => onItemSelect(items[item])}>{items[item][contentProperty]}
                 </li>
             })
             }
