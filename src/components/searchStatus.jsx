@@ -4,10 +4,10 @@ import PropType from "prop-types"
 const Status = ({ length }) => {
     const renderParse = () => {
         let altCount = length
-        altCount = 100 < altCount ? altCount % 100 : altCount
-        altCount = 20 < altCount && 100 > altCount ? altCount % 10 : altCount
+        altCount = altCount > 100 ? altCount % 100 : altCount
+        altCount = altCount > 20 && altCount < 100 ? altCount % 10 : altCount
 
-        return 2 <= altCount && 4 >= altCount
+        return altCount >= 2 && altCount <= 4
             ? " человека тусанут"
             : " человек тусанет"
     }
@@ -16,12 +16,14 @@ const Status = ({ length }) => {
         <h3>
             <span
                 className={
-                    0 !== length ? "badge m-1 bg-primary" : "badge m-1 bg-danger"
+                    // eslint-disable-next-line yoda
+                    !length ? "badge m-1 bg-danger" : "badge m-1 bg-primary"
                 }
             >
-                {0 !== length
-                    ? `${length} ${renderParse()} с тобой сегодня`
-                    : "Никто с тобой не тусонет"}
+
+                {!length
+                    ? "Никто с тобой не тусонет"
+                    : `${length} ${renderParse()} с тобой сегодня` }
             </span>
         </h3>
     )

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react"
-import User from "./user"
 import API from "../API"
 import { paginate } from "../utils/paginate"
 import Status from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
+import UserTable from "./usersTable"
+import _ from "lodash"
 
 const Users = () => {
     const [professions, setProfessions] = useState()
     const [users, setUsers] = useState()
     const [selectedProf, setSelectedProf] = useState()
-    const pageSize = 4
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" })
+    const pageSize = 8
     const [currentPage, setCurrentPage] = useState(1)
     useEffect(() => {
         API.professions
@@ -34,12 +36,12 @@ const Users = () => {
     }
     const handleDeleteRow = (id) => {
         setUsers(users.filter((user) => user._id !== id))
-        0 === userCurrent.length - 1 && setCurrentPage(currentPage - 1)
+        userCurrent.length - 1 === 0 && setCurrentPage(currentPage - 1)
     }
     const handlePageChange = (id) => {
         setCurrentPage(id)
     }
-    const handleTogBookmark = (id) => {
+    const handleToggleBookMark = (id) => {
         const i = users.findIndex((user) => user._id === id)
         const newUsers = [...users]
 
@@ -47,13 +49,23 @@ const Users = () => {
         setUsers(newUsers)
     }
 
+    // Changing of sort
+    const handleSort = (item) => {
+        setSortBy(item)
+    }
+
     const filteredUsers = selectedProf
         ? users.filter(user => {
             return user.profession._id === selectedProf._id
         })
         : users
+
+    // Sort of elements
+    const sortedUsers = _.orderBy(filteredUsers, sortBy.iter, sortBy.order)
     const count = filteredUsers && filteredUsers.length
-    const userCurrent = filteredUsers && paginate(filteredUsers, currentPage, pageSize)
+
+    // Pages
+    const userCurrent = filteredUsers && paginate(sortedUsers, currentPage, pageSize)
 
     const clearFilter = () => {
         setSelectedProf()
@@ -76,47 +88,29 @@ const Users = () => {
                     </>
                 )}
             </div>
-            {count && (
-                <div className="d-flex flex-column">
-                    <Status length={count}></Status>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Имя</th>
-                                <th scope="col">Качества</th>
-                                <th scope="col">Провфессия</th>
-                                <th scope="col">Встретился, раз</th>
-                                <th scope="col">Оценка</th>
-                                <th scope="col">Избранное</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <>
-                                {userCurrent &&
-                                    userCurrent.map((user) => {
-                                        return (
-                                            <User
-                                                key={user._id}
-                                                {...user}
-                                                onDelete={handleDeleteRow}
-                                                onBookMark={handleTogBookmark}
-                                            ></User>
-                                        )
-                                    })}
-                            </>
-                        </tbody>
-                    </table>
-                    <div className="d-flex justify-content-center">
-                        <Pagination
-                            itemsCount={count}
-                            pageSize={pageSize}
-                            onPageChange={handlePageChange}
-                            currentPage={currentPage}
-                        ></Pagination>
-                    </div>
-                </div>
-            )}
+            <div className="d-flex flex-column">
+                {count !== undefined && <Status length={count}></Status>}
+                {count > 0 && (
+                    <>
+                        <UserTable
+                            users={userCurrent}
+                            onSort={handleSort}
+                            selectedSort = {sortBy}
+                            onDeleteRow = {handleDeleteRow}
+                            onToggleBookMark = {handleToggleBookMark}
+                        >
+                        </UserTable>
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                itemsCount={count}
+                                pageSize={pageSize}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            ></Pagination>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     )
 }
