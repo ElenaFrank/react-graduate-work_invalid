@@ -1,16 +1,26 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import Table from "./table"
-// import TableHeader from "./tableHeader"
-// import TableBody from "./tableBody"
 import BookMark from "./bookmark"
 import QualitiesList from "./qualitiesList"
 import PropType from "prop-types"
+import { Link } from "react-router-dom"
+import UserPage from "./userPage"
 
 // eslint-disable-next-line react/prop-types
 const UserTable = ({ users, onSort, selectedSort, onDeleteRow, onToggleBookMark }) => {
+    const openUserPage = (user) => (
+        <UserPage user={user}></UserPage>
+    )
+
     const columns = {
-        name: { path: "name", name: "Имя" },
+        name: {
+            path: "name",
+            name: "Имя",
+            component: (user) => (
+                <Link key = {user._id} to = {`users/${user._id}`} onClick = {() => openUserPage(user)}>{user.name}</Link>
+            )
+        },
         qualities: {
             name: "Качества",
             component: (user) => (
