@@ -3,21 +3,26 @@ import PropType from "prop-types"
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
     return (
-        <div>
-            <label
-                htmlFor={name}
-            >
-                {label}
-            </label>
-            <input
-                type={type}
-                id={name}
-                name={name}
-                value={value}
-                onChange={onChange}
-            />
-            {error && <p>{error}</p>}
-        </div>
+        <>
+            <div className="mb-4">
+                <label
+                    htmlFor={name}
+                >
+                    {label}
+                </label>
+                <input
+                    type={type}
+                    id={name}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                />
+                {error &&
+                <div className="invalid-feedback">
+                    {error}
+                </div>}
+            </div>
+        </>
     )
 }
 TextField.defaultProps = {
