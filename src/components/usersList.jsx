@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import API from "../API"
 import { paginate } from "../utils/paginate"
+import { searchUsers } from "../utils/search"
 import Status from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
@@ -15,6 +16,7 @@ const Users = () => {
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc", style: "bi bi-caret-up-fill" })
     const pageSize = 8
     const [currentPage, setCurrentPage] = useState(1)
+    const [value, setValue] = useState("")
     useEffect(() => {
         API.professions
             .fetchAll()
@@ -62,13 +64,14 @@ const Users = () => {
                 return user.profession._id === selectedProf._id
             })
             : users
-
+        const foundedUsers = searchUsers(selectedProf, filteredUsers, users, value)
         // Sort of elements
-        const sortedUsers = _.orderBy(filteredUsers, sortBy.path, sortBy.order)
-        const count = filteredUsers && filteredUsers.length
+        const sortedUsers = _.orderBy(foundedUsers, sortBy.path, sortBy.order)
+        const count = foundedUsers && foundedUsers.length
 
         // Pages
-        const userCurrent = filteredUsers && paginate(sortedUsers, currentPage, pageSize)
+        const userCurrent = foundedUsers && paginate(sortedUsers, currentPage, pageSize)
+        console.log(foundedUsers)
 
         const clearFilter = () => {
             setSelectedProf()
@@ -95,6 +98,16 @@ const Users = () => {
                 </div>
                 <div className="d-flex flex-column">
                     {count !== undefined && <Status length={count}></Status>}
+                    <div className="input-group flex-nowrap">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Username"
+                            aria-label="Username"
+                            aria-describedby="addon-wrapping"
+                            onChange={e => setValue(e.target.value)}
+                        />
+                    </div>
                     {count > 0 && (
                         <>
                             <UserTable
