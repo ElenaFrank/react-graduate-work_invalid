@@ -64,7 +64,9 @@ const Users = () => {
                 return user.profession._id === selectedProf._id
             })
             : users
-        const foundedUsers = searchUsers(selectedProf, filteredUsers, users, value)
+
+        // Search users
+        const foundedUsers = searchUsers(selectedProf ? filteredUsers : users, value)
         // Sort of elements
         const sortedUsers = _.orderBy(foundedUsers, sortBy.path, sortBy.order)
         const count = foundedUsers && foundedUsers.length
