@@ -1,6 +1,6 @@
 import React from "react"
-import UsersList from "../components/usersList"
-import UserPage from "../components/userPage"
+import UsersListPage from "../components/page/usersListPage"
+import UserPage from "../components/page/userPage/userPage"
 import { useParams, useHistory } from "react-router-dom"
 
 const Users = () => {
@@ -11,7 +11,7 @@ const Users = () => {
     const comebackAllUsers = () => {
         history.push("/users")
     }
-    return <>{userId ? <UserPage comebackAllUsers={comebackAllUsers} id = {userId}/> : <UsersList />}</>
+    return <>{userId ? <UserPage comebackAllUsers={comebackAllUsers} id = {userId}/> : <UsersListPage />}</>
 }
 
 export default Users

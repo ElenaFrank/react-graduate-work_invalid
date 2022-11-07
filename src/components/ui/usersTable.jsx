@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import Table from "./table"
-import BookMark from "./bookmark"
-import QualitiesList from "./qualitiesList"
+import Table from "../common/table"
+import BookMark from "../common/bookmark"
+import Qualities from "./quality"
 import PropType from "prop-types"
 import { Link } from "react-router-dom"
-import UserPage from "./userPage"
+import UserPage from "../../components/page/userPage"
 
 // eslint-disable-next-line react/prop-types
 const UserTable = ({ users, onSort, selectedSort, onDeleteRow, onToggleBookMark }) => {
@@ -24,7 +24,7 @@ const UserTable = ({ users, onSort, selectedSort, onDeleteRow, onToggleBookMark 
         qualities: {
             name: "Качества",
             component: (user) => (
-                <QualitiesList qualities = {user.qualities} />
+                <Qualities qualities = {user.qualities} />
             )
         },
         profession: { path: "profession.name", name: "Провфессия" },

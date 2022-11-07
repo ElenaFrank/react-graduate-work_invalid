@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from "react"
-import API from "../API"
-import { paginate } from "../utils/paginate"
-import { searchData } from "../utils/search"
-import Status from "./searchStatus"
-import Pagination from "./pagination"
-import GroupList from "./groupList"
-import UserTable from "./usersTable"
+import API from "../../../API"
+import { paginate } from "../../../utils/paginate"
+import { searchData } from "../../../utils/search"
+import Status from "../../ui/searchStatus"
+import Pagination from "../../../components/common/pagination"
+import GroupList from "../../../components/common/groupList"
+import UserTable from "../../ui/usersTable"
 import _ from "lodash"
 
-const Users = () => {
+const UsersListPage = () => {
     const [professions, setProfessions] = useState()
     const [users, setUsers] = useState()
     const [selectedProf, setSelectedProf] = useState()
@@ -137,4 +137,4 @@ const Users = () => {
     return "Loading..."
 }
 
-export default Users
+export default UsersListPage
