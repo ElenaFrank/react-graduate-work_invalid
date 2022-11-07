@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 import API from "../API"
 import { paginate } from "../utils/paginate"
-import { searchUsers } from "../utils/search"
+import { searchData } from "../utils/search"
 import Status from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
@@ -66,7 +66,7 @@ const Users = () => {
             : users
 
         // Search users
-        const foundedUsers = searchUsers(selectedProf ? filteredUsers : users, value)
+        const foundedUsers = searchData(selectedProf ? filteredUsers : users, value)
         // Sort of elements
         const sortedUsers = _.orderBy(foundedUsers, sortBy.path, sortBy.order)
         const count = foundedUsers && foundedUsers.length
