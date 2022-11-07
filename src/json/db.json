@@ -1,9 +1,0 @@
-{
-    "user": [
-        {"id":11, "name": "Super hero squad"}, 
-        {"id":23, "name": "My name"},
-        {"id":55, "name": "Peter"}
-    ],
-    "profession": ["Metro City"]
-
-}
