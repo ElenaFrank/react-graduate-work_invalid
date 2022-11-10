@@ -17,6 +17,9 @@ const RegisterForm = () => {
             isRequired: { message: "Password обязателен для заполнения" },
             isCapitalSymbol: { message: "Должны присутствовать заглавные буквы" },
             isContainDigit: { message: "Должны присутствовать числа" }
+        },
+        profession: {
+            isRequired: { message: "Необходимо выбрать профессию" }
         }
     }
 
@@ -80,32 +83,6 @@ const RegisterForm = () => {
                 value={data.profession}
                 error={errors.profession}
             />
-            {/* <div className="mb-4">
-                <label htmlFor="validationCustom04" className="form-label">State</label>
-                <select
-                    value={data.profession}
-                    className="form-select"
-                    id="validationCustom04"
-                    name="profession"
-                    onChange={handleChange}
-                >
-                    <option disabled value="">Choose...</option>
-                    {professions && professions.map(profession =>
-                        (
-                            <>
-                                <option
-                                    value={profession._id}
-                                    key={profession._id}
-                                >
-                                    {profession.name}
-                                </option></>
-                        ))}
-                    <option>...</option>
-                </select>
-                <div className="invalid-feedback">
-      Please select a valid state.
-                </div>
-            </div> */}
             <button
                 type="submit"
                 disabled={!isValid}

@@ -3,14 +3,14 @@ import PropType from "prop-types"
 
 const SelectField = ({ label, value, onChange, defaultOption, options, error }) => {
     const getInputClasses = () => {
-        return "form-form-select" + (error ? " is-invalid" : "")
+        return "form-select" + (error ? " is-invalid" : "")
     }
     const optionArray = !Array.isArray(options) && typeof (options) === "object"
         ? Object.keys(options).map(optionName => ({ name: options[optionName].name, value: options[optionName]._id }))
         : options
     return (
         <div className="mb-4">
-            <label htmlFor="validationCustom04" className="form-label">{label}</label>
+            <label className="form-label">{label}</label>
             <select
                 value={value}
                 className={getInputClasses()}
@@ -22,8 +22,9 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
                 {optionArray &&
                 optionArray.map(option => (
                     <option
-                        value={option.value}
                         key={option.value}
+                        value={option.value}
+
                     >
                         {option.name}
                     </option>
