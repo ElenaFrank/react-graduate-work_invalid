@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { validator } from "../../utils/validator"
 import TextField from "../common/form/textField"
+import API from "../../API"
+import SelectField from "../common/form/selectField"
 
 const RegisterForm = () => {
-    const [data, setData] = useState({ email: "", password: "" })
+    const [data, setData] = useState({ email: "", password: "", profession: "" })
     const [errors, setErrors] = useState({})
+    const [professions, setProfessions] = useState()
     const validatorConfig = {
         email: {
             isRequired: { message: "Email обязателен для заполнения" },
@@ -26,6 +29,16 @@ const RegisterForm = () => {
     useEffect(() => {
         validate()
     }, [data])
+
+    useEffect(() => {
+        API.professions
+            .fetchAll()
+            .then((data) =>
+                setProfessions(
+                    data
+                )
+            )
+    }, [])
 
     const validate = () => {
         const errors = validator(data, validatorConfig)
@@ -58,6 +71,41 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 error={errors.password}
             />
+            <SelectField
+
+                label={"Выберите ваше профессию"}
+                defaultOption={"Choose..."}
+                options={professions}
+                onChange={handleChange}
+                value={data.profession}
+                error={errors.profession}
+            />
+            {/* <div className="mb-4">
+                <label htmlFor="validationCustom04" className="form-label">State</label>
+                <select
+                    value={data.profession}
+                    className="form-select"
+                    id="validationCustom04"
+                    name="profession"
+                    onChange={handleChange}
+                >
+                    <option disabled value="">Choose...</option>
+                    {professions && professions.map(profession =>
+                        (
+                            <>
+                                <option
+                                    value={profession._id}
+                                    key={profession._id}
+                                >
+                                    {profession.name}
+                                </option></>
+                        ))}
+                    <option>...</option>
+                </select>
+                <div className="invalid-feedback">
+      Please select a valid state.
+                </div>
+            </div> */}
             <button
                 type="submit"
                 disabled={!isValid}
