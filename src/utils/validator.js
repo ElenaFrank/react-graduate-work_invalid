@@ -29,7 +29,7 @@ export function validator(data, config) {
         for (const validateMethod in config[fieldName]) {
             const error = validate(validateMethod, data[fieldName], config[fieldName][validateMethod])
             if (error && !errors[fieldName]) errors[fieldName] = error
-            console.log("error: " + error, "!errors[fieldNsme]: " + errors[fieldName])
+            // console.log("error: " + error, "!errors[fieldNsme]: " + errors[fieldName])
         }
     }
     return errors

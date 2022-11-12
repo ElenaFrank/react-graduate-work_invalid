@@ -1,5 +1,5 @@
 import React from "react"
-import PropType from "prop-types"
+import PropTypes from "prop-types"
 
 const SelectField = ({ label, value, onChange, defaultOption, options, error }) => {
     const getInputClasses = () => {
@@ -8,6 +8,9 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
     const optionArray = !Array.isArray(options) && typeof (options) === "object"
         ? Object.keys(options).map(optionName => ({ name: options[optionName].name, value: options[optionName]._id }))
         : options
+    const handleChange = ({ target }) => {
+        onChange({ name: target.name, value: target.value })
+    }
     return (
         <div className="mb-4">
             <label className="form-label">{label}</label>
@@ -16,7 +19,7 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
                 className={getInputClasses()}
                 id="validationCustom04"
                 name="profession"
-                onChange={onChange}
+                onChange={handleChange}
             >
                 <option disabled value="">{defaultOption}</option>
                 {optionArray &&
@@ -39,12 +42,12 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
 }
 
 SelectField.propTypes = {
-    label: PropType.string,
-    value: PropType.string,
-    onChange: PropType.func,
-    error: PropType.string,
-    defaultOption: PropType.string,
-    options: PropType.oneOfType([PropType.object, PropType.array]),
+    label: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    error: PropTypes.string,
+    defaultOption: PropTypes.string,
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 export default SelectField
