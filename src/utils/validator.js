@@ -1,11 +1,15 @@
+/* eslint-disable no-unused-expressions */
 export function validator(data, config) {
     const errors = {}
     const validate = (validateMethod, data, config) => {
         let statusValidate
         switch (validateMethod) {
         case "isRequired":
-            statusValidate = data.trim() === ""
-            if (data.trim() === "") return config.message
+            if (typeof data === "boolean") {
+                statusValidate = !data
+            } else {
+                statusValidate = data.trim() === ""
+            }
             break
         case "isEmail": {
             const emailRegExp = /^\S+@\S+\.\S+$/g
@@ -29,7 +33,6 @@ export function validator(data, config) {
         for (const validateMethod in config[fieldName]) {
             const error = validate(validateMethod, data[fieldName], config[fieldName][validateMethod])
             if (error && !errors[fieldName]) errors[fieldName] = error
-            // console.log("error: " + error, "!errors[fieldNsme]: " + errors[fieldName])
         }
     }
     return errors
