@@ -5,20 +5,15 @@ import BookMark from "../common/bookmark"
 import Qualities from "./quality"
 import PropType from "prop-types"
 import { Link } from "react-router-dom"
-import UserPage from "../../components/page/userPage"
 
 // eslint-disable-next-line react/prop-types
 const UserTable = ({ users, onSort, selectedSort, onDeleteRow, onToggleBookMark }) => {
-    const openUserPage = (user) => (
-        <UserPage user={user}></UserPage>
-    )
-
     const columns = {
         name: {
             path: "name",
             name: "Имя",
             component: (user) => (
-                <Link key = {user._id} to = {`users/${user._id}`} onClick = {() => openUserPage(user)}>{user.name}</Link>
+                <Link key = {user._id} to = {`users/${user._id}`}>{user.name}</Link>
             )
         },
         qualities: {
