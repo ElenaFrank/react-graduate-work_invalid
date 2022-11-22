@@ -10,6 +10,7 @@ const MultiSelectField = ({ options, defaultValue, onChange, nameElement, label 
         console.log({ nameElement, value })
         onChange({ name: nameElement, value })
     }
+
     return (
         <div className="mb-4">
             <label className="form-label">{label}</label>
