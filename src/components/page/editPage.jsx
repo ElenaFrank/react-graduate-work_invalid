@@ -1,51 +1,30 @@
 import React, { useEffect, useState } from "react"
 import { validator } from "../../utils/validator"
-import TextField from "../common/form/textField"
 import API from "../../API"
+import TextField from "../common/form/textField"
 import SelectField from "../common/form/selectField"
 import RadioField from "../common/form/radioField"
 import MultiSelectField from "../common/form/multiSelectField"
 import PropType from "prop-types"
 
-const Edit = ({ id }) => {
-    // const [data, setData] = useState({
-    //     email: "",
-    //     password: "",
-    //     profession: "",
-    //     sex: "male",
-    //     qualities: [],
-    //     licence: false
-    // })
-    const [userData, setUserData] = useState()
+const Edit = ({ id, comebackUser }) => {
     const [errors, setErrors] = useState({})
+    const [userData, setUserData] = useState()
+    // const [updatedUser, setUpdatedUser] = useState(false)
     const [professions, setProfessions] = useState()
     const [qualities, setQualities] = useState()
     const validatorConfig = {
         name: {
-            isRequired: { message: "Email обязателен для заполнения" }
+            isRequired: { message: "ФИО обязателен для заполнения" }
         },
         email: {
             isRequired: { message: "Email обязателен для заполнения" },
             isEmail: { message: "Email введен некорректно" }
         },
-        password: {
-            isRequired: { message: "Password обязателен для заполнения" },
-            isCapitalSymbol: { message: "Должны присутствовать заглавные буквы" },
-            isContainDigit: { message: "Должны присутствовать числа" }
-        },
         profession: {
             isRequired: { message: "Необходимо выбрать профессию" }
         },
-        licence: {
-            isRequired: { message: "Необходимо подвердить соглашение" }
-        }
     }
-
-    useEffect(() => {
-        API.users
-            .getById(id)
-            .then((data) => setUserData(data))
-    }, [])
 
     useEffect(() => {
         API.professions
@@ -67,6 +46,12 @@ const Edit = ({ id }) => {
             )
     }, [])
 
+    useEffect(() => {
+        API.users
+            .getById(id)
+            .then((data) => setUserData(data))
+    }, [])
+
     const validate = () => {
         if (userData) {
             const errors = validator(userData, validatorConfig)
@@ -74,12 +59,21 @@ const Edit = ({ id }) => {
             return Object.keys(errors).length === 0
         }
     }
-
     useEffect(() => {
         validate()
-    }, [])
+    }, [userData])
 
-    if (userData && qualities) {
+    // useEffect(() => {
+    //     comebackUser()
+    // }, [updatedUser])
+
+    const updateUserDate = (newData) => {
+        API.users.update(newData._id, newData)
+            .then(() => comebackUser())
+            .catch()
+    }
+
+    if (userData) {
         const isValid = Object.keys(errors).length === 0
 
         const handleSubmit = (e) => {
@@ -89,10 +83,9 @@ const Edit = ({ id }) => {
             console.log(userData)
         }
 
-        const handleChange = (target) => {
+        function handleChange(target) {
             setUserData((prevState) => ({
-                ...prevState,
-                [target.name]: target.value
+                ...prevState, [target.name]: target.value
             }))
         }
 
@@ -151,6 +144,7 @@ const Edit = ({ id }) => {
                     type="submit"
                     disabled={!isValid}
                     className="btn btn-primary w-100 mx-auto"
+                    onClick={() => updateUserDate(userData)}
                 >
                                 Submit
                 </button>
@@ -158,7 +152,9 @@ const Edit = ({ id }) => {
         )
     }
 }
+
 Edit.propTypes = {
-    id: PropType.string
+    id: PropType.string,
+    comebackUser: PropType.func,
 }
 export default Edit
