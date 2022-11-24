@@ -83,9 +83,26 @@ const Edit = ({ id, comebackUser }) => {
             console.log(userData)
         }
 
+        const getValueObject = (id, Objects) => {
+            let valueObject
+            // eslint-disable-next-line array-callback-return
+            Object.values(Objects).forEach(object => {
+                if (object._id === id) valueObject = object
+            })
+            return valueObject
+        }
+
         function handleChange(target) {
+            const newValue = Array.isArray(target.value)
+                ? target.value.map(value => {
+                    return getValueObject(value.value, qualities)
+                })
+                : typeof target.value === "object"
+                    ? getValueObject(target.value, professions)
+                    : target.value
+
             setUserData((prevState) => ({
-                ...prevState, [target.name]: target.value
+                ...prevState, [target.name]: newValue
             }))
         }
 
@@ -150,7 +167,7 @@ const Edit = ({ id, comebackUser }) => {
                 </button>
             </form>
         )
-    }
+    } else return "Loading..."
 }
 
 Edit.propTypes = {
