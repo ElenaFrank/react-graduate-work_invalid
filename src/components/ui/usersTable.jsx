@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 import React from "react"
 import Table from "../common/table"
 import BookMark from "../common/bookmark"
@@ -6,7 +6,6 @@ import Qualities from "./quality"
 import PropType from "prop-types"
 import { Link } from "react-router-dom"
 
-// eslint-disable-next-line react/prop-types
 const UserTable = ({ users, onSort, selectedSort, onDeleteRow, onToggleBookMark }) => {
     const columns = {
         name: {
@@ -44,13 +43,14 @@ const UserTable = ({ users, onSort, selectedSort, onDeleteRow, onToggleBookMark 
     )
 }
 
-UserTable.protoTypes = {
+UserTable.propTypes = {
     users: PropType.array.isRequired,
     onDeleteRow: PropType.func.isRequired,
     onToggleBookMark: PropType.func.isRequired,
     onSort: PropType.func.isRequired,
     currentSort: PropType.object.isRequired,
     bookmark: PropType.bool,
+    selectedSort: PropType.objectOf,
     _id: PropType.string
 }
 

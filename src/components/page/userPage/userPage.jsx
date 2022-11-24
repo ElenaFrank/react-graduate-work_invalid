@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import API from "../../../API"
 import Qualities from "../../ui/quality"
+import PropType from "prop-types"
 
-// eslint-disable-next-line react/prop-types
 const UserPage = ({ comebackAllUsers, id }) => {
     const [userData, setUserData] = useState()
     useEffect(() => {
@@ -27,6 +27,10 @@ const UserPage = ({ comebackAllUsers, id }) => {
             </>
         )
     } else return "Loading..."
+}
+UserPage.propTypes = {
+    comebackAllUsers: PropType.func,
+    id: PropType.string
 }
 
 export default UserPage

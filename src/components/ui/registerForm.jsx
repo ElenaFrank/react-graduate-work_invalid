@@ -107,6 +107,7 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 name="profession"
                 value={data.profession}
+                valueOption = {""}
                 error={errors.profession}
             />
             <RadioField

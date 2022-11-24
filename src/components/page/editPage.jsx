@@ -10,7 +10,6 @@ import PropType from "prop-types"
 const Edit = ({ id, comebackUser }) => {
     const [errors, setErrors] = useState({})
     const [userData, setUserData] = useState()
-    // const [updatedUser, setUpdatedUser] = useState(false)
     const [professions, setProfessions] = useState()
     const [qualities, setQualities] = useState()
     const validatorConfig = {
@@ -63,10 +62,6 @@ const Edit = ({ id, comebackUser }) => {
         validate()
     }, [userData])
 
-    // useEffect(() => {
-    //     comebackUser()
-    // }, [updatedUser])
-
     const updateUserDate = (newData) => {
         API.users.update(newData._id, newData)
             .then(() => comebackUser())
@@ -85,7 +80,6 @@ const Edit = ({ id, comebackUser }) => {
 
         const getValueObject = (id, Objects) => {
             let valueObject
-            // eslint-disable-next-line array-callback-return
             Object.values(Objects).forEach(object => {
                 if (object._id === id) valueObject = object
             })
@@ -93,11 +87,11 @@ const Edit = ({ id, comebackUser }) => {
         }
 
         function handleChange(target) {
-            const newValue = Array.isArray(target.value)
+            const newValue = target.name === "qualities"
                 ? target.value.map(value => {
                     return getValueObject(value.value, qualities)
                 })
-                : typeof target.value === "object"
+                : target.name === "profession"
                     ? getValueObject(target.value, professions)
                     : target.value
 
@@ -132,11 +126,12 @@ const Edit = ({ id, comebackUser }) => {
                 <SelectField
 
                     label={"Выберите ваше профессию"}
-                    defaultOption={"Choose..."}
+                    defaultOption={userData.profession.name}
                     options={professions}
                     onChange={handleChange}
                     name="profession"
                     value={userData.profession.name}
+                    valueOption = {userData.profession._id}
                     error={errors.profession}
                 />
                 <RadioField
