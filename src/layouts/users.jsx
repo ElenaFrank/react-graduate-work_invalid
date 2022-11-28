@@ -2,8 +2,7 @@ import React from "react"
 import UsersListPage from "../components/page/usersListPage"
 import UserPage from "../components/page/userPage/userPage"
 import { useParams, useHistory } from "react-router-dom"
-import Edit from "../components/page/editPage"
-// import API from "../API"
+import EditUserPage from "../components/page/editUserPage"
 
 const Users = () => {
     const params = useParams()
@@ -26,7 +25,7 @@ const Users = () => {
                     <div className="container mt-5">
                         <div className="row">
                             <div className=".col-md-6 .offset-md-3 shadow p-4">
-                                <Edit
+                                <EditUserPage
                                     id = {userId}
                                     comebackUser = {comebackUser}
                                 />
