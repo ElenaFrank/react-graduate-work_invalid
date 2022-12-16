@@ -34,6 +34,8 @@ const UsersListPage = () => {
             )
     }, [])
 
+    console.log(API.users)
+
     const handleProfessionsSelect = (params) => {
         setSelectedProf(params)
     }
